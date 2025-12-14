@@ -10,46 +10,46 @@
 body { background:#f3f4f6; font-family: system-ui; }
 
 /* Floating Play Button */
-.play-btn {
-  position: fixed;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #16a34a;
-  color: #fff;
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 13px;
-  box-shadow: 0 6px 20px rgba(0,0,0,.25);
-  cursor: pointer;
-  z-index: 9999;
+.play-btn{
+  position:fixed;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  background:#16a34a;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:10px;
+  font-weight:700;
+  font-size:13px;
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+  cursor:pointer;
+  z-index:9999;
 }
-.play-btn:hover { opacity: .9; }
+.play-btn:hover{opacity:.9}
 
 /* Carousel */
-.carousel {
+.carousel{
   display:flex;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   gap:24px;
   padding:30px;
 }
-.card {
+.card{
   min-width:340px;
-  background:white;
+  background:#fff;
   border-radius:18px;
   box-shadow:0 10px 25px rgba(0,0,0,.15);
   scroll-snap-align:center;
 }
-.timer {
-  background:#111827;
+.timer{
+  background:#14532d;
   color:#fff;
-  padding:8px 14px;
+  padding:6px 12px;
   border-radius:999px;
   font-size:13px;
 }
-.btn {
+.btn{
   padding:10px;
   border-radius:12px;
   font-weight:600;
@@ -60,20 +60,17 @@ body { background:#f3f4f6; font-family: system-ui; }
 
 <body>
 
-<!-- 🔊 AUDIO -->
+<!-- 🔊 Sounds -->
 <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-click-1114.mp3"></audio>
 <audio id="correctSound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
 <audio id="wrongSound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3"></audio>
 <audio id="finishSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
 
-<!-- 🎮 PLAY BUTTON -->
 <div class="play-btn" onclick="scrollToGames()">🎮 Play Games</div>
 
 <header class="text-center py-8">
   <h1 class="text-3xl font-bold">🇬🇭 Ghana Entertainment Games Hub</h1>
-  <p class="text-gray-600 mt-2">
-    Fun quizzes & games for students and entertainment lovers
-  </p>
+  <p class="text-gray-600 mt-2">Fun quizzes for students & entertainment lovers</p>
 </header>
 
 <div id="games" class="carousel"></div>
@@ -105,60 +102,6 @@ const quizzes = [
     ["Music is big in Ghana.",true],
     ["Local music goes international.",true]
   ]
-},
-
-{
-  title:"⚽ Sports & Pop Culture Game",
-  desc:"Football, stars & Ghana pop culture",
-  questions:[
-    ["Asamoah Gyan is Ghana’s top scorer.",true],
-    ["Kotoko is based in Accra.",false],
-    ["Black Stars represent Ghana.",true],
-    ["Michael Essien played for Chelsea.",true],
-    ["AFCON means Africa Cup of Nations.",true],
-    ["Cristiano Ronaldo is Ghanaian.",false],
-    ["Ghana hosted AFCON 2008.",true],
-    ["Thomas Partey plays in England.",true],
-    ["Sports betting is popular.",true],
-    ["Football is Ghana’s top sport.",true],
-    ["Boxing is popular in Bukom.",true],
-    ["Black Meteors are the senior team.",false],
-    ["Ghana won AFCON four times.",true],
-    ["Abedi Pele is a legend.",true],
-    ["Athletics is unpopular.",false],
-    ["Sports unite Ghanaians.",true],
-    ["Kofi Kingston is Ghanaian-American.",true],
-    ["Essien is a musician.",false],
-    ["Local leagues exist.",true],
-    ["Ghana qualified WC 2006.",true]
-  ]
-},
-
-{
-  title:"🎬 Movies, Comedy & Media Quiz",
-  desc:"Movies, comedy & media trends",
-  questions:[
-    ["Kumawood movies are in Twi.",true],
-    ["Lil Win is an actor.",true],
-    ["Akrobeto hosts Real News.",true],
-    ["Jackie Appiah is a musician.",false],
-    ["Comedy skits trend on TikTok.",true],
-    ["YouTube is banned.",false],
-    ["Funny Face is a comedian.",true],
-    ["Ghana has Netflix content.",true],
-    ["Social media boosts entertainment.",true],
-    ["Kumawood is in Accra.",false],
-    ["Actors earn income.",true],
-    ["Content creation is growing.",true],
-    ["Movies educate society.",true],
-    ["Entertainment is a career.",true],
-    ["Radio is dead.",false],
-    ["Streaming is replacing DVDs.",true],
-    ["Local TV stations exist.",true],
-    ["Actors don’t get paid.",false],
-    ["Comedy is popular.",true],
-    ["Media shapes culture.",true]
-  ]
 }
 ];
 
@@ -170,16 +113,16 @@ function playSound(id){
   s.play();
 }
 
-quizzes.forEach((quiz, index)=>{
+quizzes.forEach((quiz, quizIndex)=>{
   let qIndex = 0;
   let score = 0;
   let time = 10;
   let timer;
 
   const card = document.createElement("div");
-  card.className="card p-5";
+  card.className = "card p-5";
 
-  function render(){
+  function renderQuestion(){
     clearInterval(timer);
     time = 10;
 
@@ -195,59 +138,50 @@ quizzes.forEach((quiz, index)=>{
       <p class="font-semibold mb-4">${quiz.questions[qIndex][0]}</p>
 
       <div class="grid grid-cols-2 gap-4">
-        <button class="btn bg-green-600 text-white" onclick="answer(true)">TRUE</button>
-        <button class="btn bg-red-600 text-white" onclick="answer(false)">FALSE</button>
+        <button id="trueBtn" class="btn bg-green-700 text-white hover:bg-green-800">TRUE</button>
+        <button id="falseBtn" class="btn bg-emerald-600 text-white hover:bg-emerald-700">FALSE</button>
       </div>
     `;
+
+    card.querySelector("#trueBtn").onclick = ()=>handleAnswer(true);
+    card.querySelector("#falseBtn").onclick = ()=>handleAnswer(false);
 
     timer = setInterval(()=>{
       time--;
       card.querySelector(".timer").innerText = `⏱️ ${time}s`;
-      if(time <= 0) next();
+      if(time <= 0) nextQuestion();
     },1000);
   }
 
-  window.answer = (v)=>{
+  function handleAnswer(value){
     playSound("clickSound");
-    if(v === quiz.questions[qIndex][1]){
+    if(value === quiz.questions[qIndex][1]){
       score += 5;
       playSound("correctSound");
     } else {
       playSound("wrongSound");
     }
-    next();
-  };
+    nextQuestion();
+  }
 
-  function next(){
+  function nextQuestion(){
     clearInterval(timer);
     qIndex++;
     if(qIndex < quiz.questions.length){
-      render();
+      renderQuestion();
     } else {
       playSound("finishSound");
       card.innerHTML = `
         <h3 class="text-xl font-bold mb-3">🎉 Quiz Completed!</h3>
         <p class="font-semibold mb-4">Final Score: ${score} / 100</p>
 
-        <button class="btn bg-blue-600 text-white w-full mb-3" onclick="restart()">🔁 Retake Quiz</button>
-        ${index < quizzes.length-1 ? 
-        `<button class="btn bg-purple-600 text-white w-full" onclick="scrollNext()">➡️ Next Quiz</button>` 
-        : `<p class="text-green-600 text-center font-semibold">Thanks for playing 🇬🇭</p>`}
+        <button class="btn bg-green-700 text-white w-full mb-3" onclick="location.reload()">🔁 Retake Quiz</button>
+        <p class="text-center text-green-700 font-semibold">Thanks for playing 🇬🇭</p>
       `;
     }
   }
 
-  window.restart = ()=>{
-    qIndex = 0;
-    score = 0;
-    render();
-  };
-
-  window.scrollNext = ()=>{
-    container.scrollBy({left:360, behavior:"smooth"});
-  };
-
-  render();
+  renderQuestion();
   container.appendChild(card);
 });
 
